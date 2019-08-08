@@ -1,6 +1,10 @@
 const express = require('express')
 const knex = require('knex')
+const cors = require('cors')
 
+
+const app = express()
+app.use(cors())
 const database = knex({
     client: 'pg',
     connection: {
@@ -12,12 +16,12 @@ const database = knex({
   });
 
 // console.log(database.select('*').from('items'))
-const app = express()
+
 
 app.get('/',(req,res)=>{
     database.select('*').from('items').then(user=>{
-        console.log(user)
-    })
+        res.json(user)
+      })
 })
 app.listen(3000, () => {
   console.log('running')
